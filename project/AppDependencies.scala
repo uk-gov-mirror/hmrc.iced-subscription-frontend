@@ -18,7 +18,7 @@ import sbt.*
 
 object AppDependencies {
 
-  val bootstrapVersion = "10.4.0"
+  val bootstrapVersion = "10.7.0"
 
   val compile: Seq[ModuleID] = Seq(
     "uk.gov.hmrc" %% "bootstrap-frontend-play-30" % bootstrapVersion,
@@ -27,7 +27,7 @@ object AppDependencies {
 
   val test: Seq[ModuleID] = Seq(
     "uk.gov.hmrc"       %% "bootstrap-test-play-30" % bootstrapVersion,
-    "org.scalamock"     %% "scalamock"              % "7.5.2",
+    "org.scalamock"     %% "scalamock"              % "7.5.5",
     "org.jsoup"         %  "jsoup"                  % "1.21.2"
   ).map(_ % Test)
 
