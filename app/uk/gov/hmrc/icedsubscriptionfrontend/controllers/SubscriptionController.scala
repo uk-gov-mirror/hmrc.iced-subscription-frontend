@@ -17,11 +17,11 @@
 package uk.gov.hmrc.icedsubscriptionfrontend.controllers
 
 import play.api.i18n.I18nSupport
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.icedsubscriptionfrontend.actions.{AuthActionWithProfile, UserType}
 import uk.gov.hmrc.icedsubscriptionfrontend.audit.{AuditEvent, AuditHandler}
 import uk.gov.hmrc.icedsubscriptionfrontend.config.AppConfig
-import uk.gov.hmrc.icedsubscriptionfrontend.views.html._
+import uk.gov.hmrc.icedsubscriptionfrontend.views.html.*
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 
 import javax.inject.{Inject, Singleton}
@@ -41,10 +41,10 @@ class SubscriptionController @Inject()(
     extends FrontendController(mcc)
     with I18nSupport {
 
-  implicit val config: AppConfig = appConfig
+  given config: AppConfig = appConfig
 
   def start: Action[AnyContent] = authAction { implicit request =>
-    import UserType._
+    import UserType.*
 
     request.userType match {
       case AlreadyEnrolled(eoriNumber) =>

@@ -28,7 +28,7 @@ class HandbackController @Inject()(
   mcc: MessagesControllerComponents,
   successfullyEnrolledPage: SuccessfullyEnrolledPage)
     extends FrontendController(mcc) {
-  implicit val config: AppConfig = appConfig
+  given config: AppConfig = appConfig
 
   def successfullyEnrolled: Action[AnyContent] = Action { implicit request =>
     Ok(successfullyEnrolledPage())

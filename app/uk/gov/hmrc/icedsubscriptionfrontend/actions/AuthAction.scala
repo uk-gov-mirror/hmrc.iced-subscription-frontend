@@ -17,7 +17,7 @@
 package uk.gov.hmrc.icedsubscriptionfrontend.actions
 
 import play.api.mvc.Results.Redirect
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.icedsubscriptionfrontend.config.AppConfig
 import uk.gov.hmrc.icedsubscriptionfrontend.services.{AuthResult, AuthService}
@@ -38,11 +38,11 @@ abstract class AuthAction[P[_]](defaultParser: PlayBodyParsers, appConfig: AppCo
 }
 
 class AuthActionWithProfile @Inject()(defaultParser: PlayBodyParsers, authService: AuthService, appConfig: AppConfig)(
-  override implicit val executionContext: ExecutionContext)
+  using val executionContext: ExecutionContext)
     extends AuthAction[AuthenticatedRequest](defaultParser, appConfig) {
 
   override def invokeBlock[A](request: Request[A], block: AuthenticatedRequest[A] => Future[Result]): Future[Result] = {
-    implicit val headerCarrier: HeaderCarrier = hc(request)
+    given headerCarrier: HeaderCarrier = hc(request)
 
     authService.authenticate().flatMap {
       case AuthResult.NotLoggedIn        => Future.successful(redirectToLogin(request))
@@ -52,11 +52,11 @@ class AuthActionWithProfile @Inject()(defaultParser: PlayBodyParsers, authServic
 }
 
 class AuthActionNoProfile @Inject()(defaultParser: PlayBodyParsers, authService: AuthService, appConfig: AppConfig)(
-  override implicit val executionContext: ExecutionContext)
+  using val executionContext: ExecutionContext)
     extends AuthAction[Request](defaultParser, appConfig) {
 
   override def invokeBlock[A](request: Request[A], block: Request[A] => Future[Result]): Future[Result] = {
-    implicit val headerCarrier: HeaderCarrier = hc(request)
+    given headerCarrier: HeaderCarrier = hc(request)
 
     authService.authenticateNoProfile().flatMap { loggedIn =>
       if (loggedIn) block(request) else Future.successful(redirectToLogin(request))

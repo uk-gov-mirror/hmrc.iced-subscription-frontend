@@ -19,7 +19,7 @@ package uk.gov.hmrc.icedsubscriptionfrontend.controllers
 import base.SpecBase
 import play.api.http.Status
 import play.api.mvc.Result
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.icedsubscriptionfrontend.config.MockAppConfig
 import uk.gov.hmrc.icedsubscriptionfrontend.views.html.SignedOutPage
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
@@ -31,7 +31,7 @@ class SignOutControllerSpec extends SpecBase with MockAppConfig {
 
   val signedOutPage: SignedOutPage = app.injector.instanceOf[SignedOutPage]
 
-  private val controller = new SignOutController(signedOutPage, stubMessagesControllerComponents(), mockAppConfig)
+  private val controller = new SignOutController(signedOutPage, stubMessagesControllerComponents())(using mockAppConfig)
 
   private def setupMockAppConfig(): Unit = {
     val appName    = "iced-subscription-frontend"

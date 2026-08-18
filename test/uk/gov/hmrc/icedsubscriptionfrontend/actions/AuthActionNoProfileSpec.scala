@@ -19,7 +19,7 @@ package uk.gov.hmrc.icedsubscriptionfrontend.actions
 import base.SpecBase
 import play.api.mvc.{Action, AnyContent}
 import play.api.test.FakeRequest
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.icedsubscriptionfrontend.config.MockAppConfig
 import uk.gov.hmrc.icedsubscriptionfrontend.services.MockAuthService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
@@ -37,7 +37,7 @@ class AuthActionNoProfileSpec extends SpecBase with MockAuthService with MockApp
     new AuthActionNoProfile(stubMessagesControllerComponents().parsers, mockAuthService, mockAppConfig)
 
   class Controller extends FrontendController(stubMessagesControllerComponents()) {
-    def handleRequest(): Action[AnyContent] = authAction { req =>
+    def handleRequest(): Action[AnyContent] = authAction { implicit req =>
       Ok("logged in")
     }
   }

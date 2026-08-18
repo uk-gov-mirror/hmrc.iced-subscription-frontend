@@ -20,6 +20,8 @@ import javax.inject.{Inject, Singleton}
 import play.api.Configuration
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 
+import scala.annotation.unused
+
 trait AppConfig {
   def appName: String
   def loginUrl: String
@@ -31,7 +33,7 @@ trait AppConfig {
 }
 
 @Singleton
-class AppConfigImpl @Inject()(config: Configuration, servicesConfig: ServicesConfig) extends AppConfig {
+class AppConfigImpl @Inject()(config: Configuration, @unused servicesConfig: ServicesConfig) extends AppConfig {
   lazy val appName: String = config.getOptional[String]("appName").getOrElse("APP NAME NOT SET")
 
   lazy val loginUrl: String        = config.get[String]("login.url")

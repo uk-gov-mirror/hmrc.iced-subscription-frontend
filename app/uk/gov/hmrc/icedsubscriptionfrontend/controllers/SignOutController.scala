@@ -27,12 +27,12 @@ import uk.gov.hmrc.icedsubscriptionfrontend.controllers
 @Singleton
 class SignOutController @Inject()(
   signedOutPage: SignedOutPage,
-  mcc: MessagesControllerComponents,
-  implicit val appConfig: AppConfig)
+  mcc: MessagesControllerComponents)(
+  using val appConfig: AppConfig)
     extends FrontendController(mcc)
     with I18nSupport {
 
-  def signOut: Action[AnyContent] = doSignOut(controllers.routes.SignOutController.signedOut)
+  def signOut: Action[AnyContent] = doSignOut(controllers.routes.SignOutController.signedOut())
 
   def signOutToRestart: Action[AnyContent] = doSignOut(controllers.routes.SubscriptionController.start)
 

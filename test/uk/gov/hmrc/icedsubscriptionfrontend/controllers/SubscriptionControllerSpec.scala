@@ -19,12 +19,12 @@ package uk.gov.hmrc.icedsubscriptionfrontend.controllers
 import base.SpecBase
 import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.Result
-import play.api.test.Helpers._
+import play.api.test.Helpers.*
 import uk.gov.hmrc.icedsubscriptionfrontend.actions.{AuthActionWithProfile, UserType}
 import uk.gov.hmrc.icedsubscriptionfrontend.audit.{AuditEvent, MockAuditHandler}
 import uk.gov.hmrc.icedsubscriptionfrontend.config.MockAppConfig
 import uk.gov.hmrc.icedsubscriptionfrontend.services.{AuthResult, MockAuthService}
-import uk.gov.hmrc.icedsubscriptionfrontend.views.html._
+import uk.gov.hmrc.icedsubscriptionfrontend.views.html.*
 import uk.gov.hmrc.play.bootstrap.tools.Stubs.stubMessagesControllerComponents
 
 import scala.concurrent.Future

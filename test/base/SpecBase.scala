@@ -21,11 +21,11 @@ import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.TryValues
 import org.scalatest.matchers.should.Matchers
-import org.scalatestplus.play.guice._
+import org.scalatestplus.play.guice.*
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.mvc.{AnyContentAsEmpty, MessagesControllerComponents}
-import play.api.test.CSRFTokenHelper._
+import play.api.test.CSRFTokenHelper.*
 import play.api.test.{FakeRequest, Injecting}
 import play.api.{Application, Environment, Mode}
 import uk.gov.hmrc.http.{HeaderCarrier, SessionKeys}
@@ -55,13 +55,13 @@ trait SpecBase
       .withCSRFToken
       .asInstanceOf[FakeRequest[AnyContentAsEmpty.type]]
 
-  implicit lazy val appConfig: AppConfig = inject[AppConfig]
+  given appConfig: AppConfig = inject[AppConfig]
 
-  implicit lazy val mat: Materializer    = inject[Materializer]
-  implicit lazy val ec: ExecutionContext = inject[ExecutionContext]
+  given mat: Materializer    = inject[Materializer]
+  given ec: ExecutionContext = inject[ExecutionContext]
 
   lazy val messagesApi: MessagesApi = inject[MessagesApi]
-  implicit val messages: Messages   = messagesApi.preferred(fakeRequest)
+  given messages: Messages   = messagesApi.preferred(fakeRequest)
 
-  implicit val hc: HeaderCarrier = HeaderCarrier()
+  given hc: HeaderCarrier = HeaderCarrier()
 }
