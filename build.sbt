@@ -3,7 +3,7 @@ import scoverage.ScoverageKeys
 val appName = "iced-subscription-frontend"
 
 ThisBuild / majorVersion := 0
-ThisBuild / scalaVersion := "2.13.18"
+ThisBuild / scalaVersion := "3.3.7"
 
 lazy val microservice = Project(appName, file("."))
   .enablePlugins(
@@ -27,7 +27,12 @@ lazy val microservice = Project(appName, file("."))
     // ***************
     // Use the silencer plugin to suppress warnings
     // You may turn it on for `views` too to suppress warnings from unused imports in compiled twirl templates, but this will hide other warnings.
-    scalacOptions ++= Seq("-Wconf:src=routes/.*:s", "-Wconf:cat=unused-imports&src=html/.*:s")
+    scalacOptions ++= Seq(
+      "-Wconf:src=html/.*:s",
+      "-Wconf:src=target/.*:s",
+      "-Wconf:src=.*routes.*:s"
+    ),
+    scalacOptions ~= (_.distinct)
     // ***************
   )
 

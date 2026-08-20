@@ -18,7 +18,7 @@ package uk.gov.hmrc.icedsubscriptionfrontend.controllers
 
 import javax.inject.{Inject, Singleton}
 import play.api.i18n.{I18nSupport, Lang}
-import play.api.mvc._
+import play.api.mvc.*
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import uk.gov.hmrc.play.language.LanguageUtils
 
@@ -35,7 +35,7 @@ class LanguageSwitchController @Inject()(
   protected lazy val languageMap: Map[String, Lang] =
     Map("en" -> Lang("en"), "cy" -> Lang("cy"))
 
-  def switchToLanguage(lang: String) = Action { implicit request =>
+  def switchToLanguage(lang: String) = Action { implicit request: Request[AnyContent] =>
     val enabled: Boolean = languageMap.get(lang).exists(languageUtils.isLangAvailable)
     val newLang = if (enabled) languageMap(lang) else languageMap("en")
 

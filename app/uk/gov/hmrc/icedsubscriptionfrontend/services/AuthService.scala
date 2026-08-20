@@ -19,7 +19,7 @@ package uk.gov.hmrc.icedsubscriptionfrontend.services
 import com.google.inject.{Inject, Singleton}
 import uk.gov.hmrc.auth.core.{CredentialRole, _}
 import uk.gov.hmrc.auth.core.authorise.EmptyPredicate
-import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals._
+import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals.*
 import uk.gov.hmrc.auth.core.retrieve.{Credentials, EmptyRetrieval, ~}
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.icedsubscriptionfrontend.actions.UserType
@@ -35,7 +35,7 @@ object AuthResult {
 }
 
 @Singleton
-class AuthService @Inject()(val authConnector: AuthConnector)(implicit ec: ExecutionContext)
+class AuthService @Inject()(val authConnector: AuthConnector)(using ec: ExecutionContext)
   extends AuthorisedFunctions {
 
   private val VerifyProviderType = "Verify"
@@ -46,10 +46,10 @@ class AuthService @Inject()(val authConnector: AuthConnector)(implicit ec: Execu
   // predicates so that we can closely control the order of checks rather than
   // relying on any correspondence between predicate order and
   // the exception that is thrown in a particular scenario...
-  def authenticate()(implicit hc: HeaderCarrier): Future[AuthResult] =
+  def authenticate()(using hc: HeaderCarrier): Future[AuthResult] =
     authorised(AuthProviders(AuthProvider.GovernmentGateway))
       .retrieve(allEnrolments and credentialRole and affinityGroup and credentials) { retrievals =>
-        import UserType._
+        import UserType.*
 
         val userType = retrievals match {
           case _ ~ _ ~ Some(Credentials(_, VerifyProviderType)) => UnsupportedVerifyUser
@@ -78,7 +78,7 @@ class AuthService @Inject()(val authConnector: AuthConnector)(implicit ec: Execu
 
   private def isAdmin(role: Option[CredentialRole]) = role.getOrElse(Assistant) == User
 
-  def authenticateNoProfile()(implicit hc: HeaderCarrier): Future[Boolean] =
+  def authenticateNoProfile()(using hc: HeaderCarrier): Future[Boolean] =
     authConnector
       .authorise(EmptyPredicate, EmptyRetrieval)
       .map(_ => true)
